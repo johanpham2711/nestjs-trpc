@@ -1,11 +1,13 @@
-import { Input, Mutation, Query, Router } from 'nestjs-trpc';
-import { ProductsService } from './products.service';
-import { Product, productSchema } from './product.schema';
+import { Input, Mutation, Query, Router, UseMiddlewares } from 'nestjs-trpc';
 import { z } from 'zod';
+import { LoggerMiddleware } from '../trpc';
+import { Product, productSchema } from './product.schema';
+import { ProductsService } from './products.service';
 
 @Router({
   alias: 'products',
 })
+@UseMiddlewares(LoggerMiddleware)
 export class ProductsRouter {
   constructor(private readonly productsService: ProductsService) {}
 
